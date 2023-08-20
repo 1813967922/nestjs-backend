@@ -1,0 +1,13 @@
+
+POST http://localhost:3000/api/auth/signin
+Content-Type: application/json
+
+{
+    "username": "张三",
+    "password": "123456"
+}
+
+
+# daw
+GET http://localhost:3000/api/test
+Content-Type: application/json
