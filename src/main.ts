@@ -4,7 +4,6 @@ import { setupPlugins } from "./plugin"
 import { ValidationPipe } from "@nestjs/common"
 import { NestExpressApplication } from "@nestjs/platform-express"
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston"
-import { AllExceptionFilter } from "./common/filter/all.exception.filter"
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
@@ -14,8 +13,6 @@ async function bootstrap() {
   app.setGlobalPrefix("api")
   // 注册全局管道
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }))
-  // 注册全局过滤器
-  app.useGlobalFilters(new AllExceptionFilter())
   // 注册插件
   setupPlugins(app)
   // 启动

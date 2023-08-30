@@ -2,15 +2,15 @@ import {
   ArgumentsHost,
   Catch,
   ExceptionFilter,
-  Inject,
   Logger,
-  LoggerService,
   UnauthorizedException,
 } from "@nestjs/common"
-
-@Catch()
-export class AllExceptionFilter implements ExceptionFilter {
-  private readonly logger: Logger = new Logger(AllExceptionFilter.name)
+/**
+ * 认证授权异常过滤器
+ */
+@Catch(UnauthorizedException)
+export class UnauthorizedExceptionFilter implements ExceptionFilter {
+  private readonly logger: Logger = new Logger(UnauthorizedExceptionFilter.name)
 
   async catch(exception: any, host: ArgumentsHost) {
     const ctx = host.switchToHttp()
@@ -18,8 +18,6 @@ export class AllExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse()
     const status = exception.getStatus()
 
-    // 认证授权异常
-    if (exception instanceof UnauthorizedException) {
       response.status(status).json({
         code: status,
         data: null,
@@ -28,6 +26,6 @@ export class AllExceptionFilter implements ExceptionFilter {
         url: request.originalUrl,
         method: request.method,
       })
-    }
+    
   }
 }
